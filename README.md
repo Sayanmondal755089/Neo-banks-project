@@ -1,5 +1,5 @@
 
-# 💳 Neo Banking System 
+## 💳 Neo Banking System 
 
 A full-stack, modular Neo Banking System developed collaboratively, simulating real-world digital banking operations based on RBI-inspired guidelines. This project demonstrates how modern fintech platforms (like UPI and neo banks) handle transactions, authentication, analytics, and security in a scalable architecture.
 
