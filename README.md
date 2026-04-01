@@ -1,112 +1,144 @@
+# 🔴 Neo Bank – Mini Transaction Dashboard
 
-# 💳 Neo Banking System 
+A sleek, modern **Flask + MySQL web application** that simulates a digital banking dashboard with advanced transaction filtering.
 
-A full-stack, modular Neo Banking System developed collaboratively, simulating real-world digital banking operations based on RBI-inspired guidelines. This project demonstrates how modern fintech platforms (like UPI and neo banks) handle transactions, authentication, analytics, and security in a scalable architecture.
-
-
-## 🚀 Project Overview
-
-This system replicates a **digital-first banking ecosystem**, where multiple modules interact to provide:
-
-- Secure transactions
-- Real-time account management
-- Fraud detection
-- Financial insights
-- User authentication & KYC
-
-
+Built with a **premium red glassmorphism UI** inspired by Apple-style design.
 
 ---
 
-## 🧩 Modules Breakdown
+## 🚀 Features
 
-### 1. Customer Onboarding & KYC
-- Add user details
-- Validate PAN/Aadhaar format
-- Store user profile
+* 📊 View latest **N transactions**
+* 📅 Filter transactions by **date range**
+* 👤 Filter transactions by **user ID**
+* 🎨 Modern UI with:
 
-### 2. Authentication System
-- PIN-based login
-- OTP verification
-- Retry limit handling
-
-### 3. Account Management
-- Account creation
-- Balance tracking
-- Account summary
-
-### 4. 💥 Transaction Processing System (Core Module)
-- Deposits / Withdrawals
-- Fund Transfer
-- Transaction logging
-- RBI rule enforcement
-
-### 5. Mini Statement Generator
-- Last N transactions
-- Date-wise filtering
-
-### 6. UPI Payment Simulator
-- UPI ID-based transfers
-- Format validation
-
-### 7. Expense Analyzer
-- Categorization of spending
-- Monthly reports
-- Budget insights
-
-### 8. Fraud Detection Module
-- High-value transaction alerts
-- Pattern-based detection
-- Risk scoring
-
-### 9. Credit Score Estimator
-- Based on income & behavior
-- User risk classification
-
-### 10. Savings / Investment Planner
-- Savings suggestions
-- Basic financial planning
-
-### 11. Notification System
-- OTP alerts
-- Transaction alerts
-- Fraud alerts
+  * Glassmorphism effects
+  * Gradient animations
+  * Smooth hover interactions
+* 🔐 Secure SQL queries (parameterized)
 
 ---
 
-## ⚙️ Core Features
+## 🛠️ Tech Stack
 
-- 🔐 Secure Authentication (PIN + OTP)
-- 💸 Real-time Transaction Processing
-- 📊 Expense Tracking & Analytics
-- 🚨 Fraud Detection System
-- 📩 Notification Engine
-- 🧾 Transaction History & Statements
+* **Backend:** Flask
+* **Database:** MySQL
+* **Frontend:** HTML, CSS (custom styling)
 
 ---
 
-## 🇮🇳 RBI-Inspired Constraints
+## 📂 Project Structure
 
-- UPI Transaction Limit: ₹1,00,000 per transaction/day
-- Daily Transaction Count Limit
-- KYC-based access control
-- Fraud flags for high-value transactions
-- Secure transaction logging
+```id="2gi0ar"
+neo-bank/
+│── app.py
+│── templates/
+│   └── index.html
+│── static/
+│   └── (optional assets)
+```
 
 ---
 
-## 🔄 Transaction Flow
+## ⚙️ Installation
 
-1. User initiates transaction
-2. Authentication (PIN/OTP)
-3. KYC validation
-4. Balance check
-5. RBI limit validation
-6. Transaction execution
-7. Logging & storage
-8. Data sent to:
-   - Statement module
-   - Fraud detection
-   - Notifications
-   - Analytics
+### 1. Clone the repository
 
+```bash id="gjxj0i"
+git clone https://github.com/your-username/neo-bank.git
+cd neo-bank
+```
+
+### 2. Install dependencies
+
+```bash id="u5zyk7"
+pip install flask mysql-connector-python
+```
+
+### 3. Setup MySQL Database
+
+Create a database:
+
+```sql id="b1bc40"
+CREATE DATABASE vaxtronbank;
+```
+
+Create table:
+
+```sql id="q9o2ne"
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    amount FLOAT,
+    date DATE,
+    description VARCHAR(255),
+    type VARCHAR(50)
+);
+```
+
+---
+
+## 🔑 Environment Variables (IMPORTANT)
+
+⚠️ Do NOT hardcode your database password
+
+Set it like this:
+
+**Windows**
+
+```bash id="r0ccnc"
+set DB_PASSWORD=yourpassword
+```
+
+**Linux / Mac**
+
+```bash id="d4o922"
+export DB_PASSWORD=yourpassword
+```
+
+---
+
+## ▶️ Run the App
+
+```bash id="3wboib"
+python app.py
+```
+
+Then open:
+
+```id="rh0mra"
+http://127.0.0.1:5000/
+```
+
+---
+
+## 📸 Preview
+
+* Clean dashboard UI
+* Interactive filters
+* Smooth animations
+
+---
+
+## 🧠 Future Improvements
+
+* 🔐 User authentication system
+* 📈 Transaction analytics (charts)
+* 🌐 Deploy on cloud (AWS / Render)
+* 👥 Multi-user support
+
+---
+
+## ⚠️ Disclaimer
+
+This project is for **educational purposes only** and does NOT represent a real banking system.
+
+---
+
+## 👨‍💻 Author
+
+Built by **Buvan** 🚀
+Aspiring developer focused on building real-world projects.
+
+---
