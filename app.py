@@ -7,8 +7,8 @@ def get_connection():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="77$@gmail.com",
-        database="vaxtronbank"
+        password="password",
+        database="neobank"
     )
 
 @app.route("/", methods=["GET", "POST"])
