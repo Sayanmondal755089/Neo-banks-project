@@ -2,8 +2,8 @@
 
 A complete full-stack UPI payment simulation project.
 **Backend:** Python · Flask · SQLite (standard libraries)
-**Frontend:** Responsive webpage demo — HTML · CSS · Vanilla JS
-**Report:** Auto-generated PDF via ReportLab
+**Frontend:** Responsive webpage  — HTML · CSS · Vanilla JS
+
 
 ---
 
