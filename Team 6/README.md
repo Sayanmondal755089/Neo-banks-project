@@ -1,4 +1,4 @@
-# 💸 UPI Payment Simulator — Full Stack Webpage Demo
+# 💸 UPI Payment Simulator — 
 
 A complete full-stack UPI payment simulation project.
 **Backend:** Python · Flask · SQLite (standard libraries)
