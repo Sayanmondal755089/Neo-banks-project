@@ -10,17 +10,16 @@ A complete full-stack UPI payment simulation project.
 ## 📁 Project Structure
 
 ```
-upi_demo/
+Team 6
 ├── backend/
-│   ├── app.py              ← Flask REST API
-│   ├── db.py               ← SQLite connection + schema (CREATE TABLE)
-│   ├── models.py           ← All SQL queries + business logic
+│   ├── app.py
+│   ├── db.py
+│   ├── models.py
 │   └── requirements.txt
 ├── frontend/
-│   └── index.html          ← Full webpage demo (CSS + JS inline)
-├── docs/
-│   ├── generate_report.py  ← PDF report generator
-│   └── UPI_Simulator_Report.pdf
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
 └── README.md
 ```
 
