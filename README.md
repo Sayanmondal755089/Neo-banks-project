@@ -52,8 +52,8 @@ Team N/
 │   └── requirements.txt
 ├── frontend/
 │   └── index.html        ← Webpage demo
-├── docs/
-│   └── Report.pdf        ← Project report
+├
+│     
 └── README.md
 ```
 
@@ -791,6 +791,7 @@ python app.py
 
 **Neo-Banks-Project** &nbsp;·&nbsp; 11 Teams &nbsp;·&nbsp; Full-Stack Digital Banking Simulation
 
-*Department of Computer Science*
+*Department of Banking Technology*
+*Btech CSBS 2025-2029*
 
 </div>
