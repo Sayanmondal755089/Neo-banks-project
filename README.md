@@ -1,86 +1,112 @@
-# Neo Bank – Mini Transaction Dashboard
 
-This is a simple web app built using Flask and MySQL to view and filter bank transactions.
+# 💳 Neo Banking System 
 
----
+A full-stack, modular Neo Banking System developed collaboratively, simulating real-world digital banking operations based on RBI-inspired guidelines. This project demonstrates how modern fintech platforms (like UPI and neo banks) handle transactions, authentication, analytics, and security in a scalable architecture.
 
-## What this does
 
-* Shows the latest N transactions
-* Lets you filter transactions between two dates
-* Lets you view transactions of a specific user
+## 🚀 Project Overview
 
----
+This system replicates a **digital-first banking ecosystem**, where multiple modules interact to provide:
 
-## How it works
+- Secure transactions
+- Real-time account management
+- Fraud detection
+- Financial insights
+- User authentication & KYC
 
-* The backend is built using Flask
-* It connects to a MySQL database
-* Based on the option selected in the form, it runs different SQL queries
-* The results are sent to the HTML page and displayed in a table
+
 
 ---
 
-## Tech used
+## 🧩 Modules Breakdown
 
-* Flask
-* MySQL
-* HTML + CSS
+### 1. Customer Onboarding & KYC
+- Add user details
+- Validate PAN/Aadhaar format
+- Store user profile
 
----
+### 2. Authentication System
+- PIN-based login
+- OTP verification
+- Retry limit handling
 
-## Files
+### 3. Account Management
+- Account creation
+- Balance tracking
+- Account summary
 
-```
-neo-bank/
-│── app.py
-│── templates/
-│   └── index.html
-```
+### 4. 💥 Transaction Processing System (Core Module)
+- Deposits / Withdrawals
+- Fund Transfer
+- Transaction logging
+- RBI rule enforcement
 
----
+### 5. Mini Statement Generator
+- Last N transactions
+- Date-wise filtering
 
-## Setup
+### 6. UPI Payment Simulator
+- UPI ID-based transfers
+- Format validation
 
-1. Install requirements:
+### 7. Expense Analyzer
+- Categorization of spending
+- Monthly reports
+- Budget insights
 
-```
-pip install flask mysql-connector-python
-```
+### 8. Fraud Detection Module
+- High-value transaction alerts
+- Pattern-based detection
+- Risk scoring
 
-2. Create database:
+### 9. Credit Score Estimator
+- Based on income & behavior
+- User risk classification
 
-```
-CREATE DATABASE vaxtronbank;
-```
+### 10. Savings / Investment Planner
+- Savings suggestions
+- Basic financial planning
 
-3. Create table:
-
-```
-CREATE TABLE transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    amount FLOAT,
-    date DATE,
-    description VARCHAR(255),
-    type VARCHAR(50)
-);
-```
-
-4. Run:
-
-```
-python app.py
-```
-
-Open:
-
-```
-http://127.0.0.1:5000/
-```
+### 11. Notification System
+- OTP alerts
+- Transaction alerts
+- Fraud alerts
 
 ---
 
-## Note
+## ⚙️ Core Features
 
-This is just a basic project for learning/demo purposes.
+- 🔐 Secure Authentication (PIN + OTP)
+- 💸 Real-time Transaction Processing
+- 📊 Expense Tracking & Analytics
+- 🚨 Fraud Detection System
+- 📩 Notification Engine
+- 🧾 Transaction History & Statements
+
+---
+
+## 🇮🇳 RBI-Inspired Constraints
+
+- UPI Transaction Limit: ₹1,00,000 per transaction/day
+- Daily Transaction Count Limit
+- KYC-based access control
+- Fraud flags for high-value transactions
+- Secure transaction logging
+
+---
+
+## 🔄 Transaction Flow
+
+1. User initiates transaction
+2. Authentication (PIN/OTP)
+3. KYC validation
+4. Balance check
+5. RBI limit validation
+6. Transaction execution
+7. Logging & storage
+8. Data sent to:
+   - Statement module
+   - Fraud detection
+   - Notifications
+   - Analytics
+
