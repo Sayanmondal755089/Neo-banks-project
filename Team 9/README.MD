@@ -3,25 +3,6 @@
 > **Module 9** of the Neo-Banks collaborative project.
 > Estimates a customer's creditworthiness using income data and transaction behaviour.
 
----
-
-## 🚀 Quick Start
-
-```bash
-# Step 1 — Install dependencies
-cd "Team 9/backend"
-pip install flask flask-cors reportlab
-
-# Step 2 — Start the API
-python app.py
-# → Running at http://localhost:5000
-
-# Step 3 — Open frontend
-# Double-click  Team 9/frontend/index.html  in your browser
-```
-
----
-
 ## 📁 File Structure
 
 ```
