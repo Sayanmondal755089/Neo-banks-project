@@ -28,21 +28,6 @@ Team 9/
 | `GET`  | `/api/credit/history/<id>` | Fetch score history |
 | `GET`  | `/api/credit/all` | All profiles (admin) |
 
-### Sample Request — Evaluate
-
-```json
-POST /api/credit/evaluate
-{
-  "customer_id": 1001,
-  "customer_name": "Arjun Sharma",
-  "monthly_income": 75000,
-  "existing_loans": 1,
-  "loan_repaid": 3,
-  "overdraft_count": 0
-}
-```
-
----
 
 ## 🧮 Scoring Model
 
