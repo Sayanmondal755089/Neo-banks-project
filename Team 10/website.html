@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NeoBank | Savings & Investment Planner (Database Schema Integrated)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #eef2f7 0%, #dce5ed 100%);
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        /* header + DB badge */
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #0a2e3f, #166a5c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        .db-badge {
+            background: #1f3b4c;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            color: #c3e2f0;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 8px;
+            letter-spacing: 0.3px;
+        }
+        .sub {
+            color: #2c4b5e;
+            margin-top: 0.4rem;
+        }
+
+        /* grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(2px);
+            border-radius: 1.8rem;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+            padding: 1.5rem 1.8rem;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,240,0.7);
+        }
+        .card:hover {
+            transform: translateY(-3px);
+        }
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: #1e4a6b;
+            border-left: 5px solid #2c7da0;
+            padding-left: 0.9rem;
+        }
+        .card-sub {
+            color: #5f7f92;
+            font-size: 0.8rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed #cbd5e6;
+            padding-bottom: 0.5rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        label {
+            font-weight: 600;
+            color: #1e3a4b;
+            font-size: 0.8rem;
+        }
+        input, select {
+            background: #f9fbfd;
+            border: 1px solid #cbd5e1;
+            padding: 0.65rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        input:focus {
+            border-color: #2c7da0;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(44,125,160,0.2);
+        }
+        button {
+            background: #1f5e7e;
+            color: white;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 0.6rem;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #0e4a66;
+            transform: scale(0.98);
+        }
+        .result-box {
+            background: #f1f7fc;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            border-left: 4px solid #2c7da0;
+        }
+        .inline-flex {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 20px;
+            height: 7px;
+            width: 100%;
+            margin: 0.6rem 0;
+        }
+        .progress-fill {
+            background: #2c7da0;
+            border-radius: 20px;
+            height: 7px;
+            width: 0%;
+        }
+        .badge-status {
+            display: inline-block;
+            background: #e9ecef;
+            border-radius: 20px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        hr {
+            margin: 0.7rem 0;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, #cbd5e1, transparent);
+        }
+        .schema-note {
+            background: #eef3fa;
+            border-radius: 1rem;
+            padding: 1rem 1.4rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: #1f5e7e;
+            border: 1px solid #cbdbe2;
+            margin-top: 1rem;
+        }
+        @media (max-width: 720px) {
+            body { padding: 1rem; }
+            .card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🏦 NeoBank · Savings & Investment Suite</h1>
+        <div class="db-badge">📀 MySQL Schema Integrated | neobank DB</div>
+        <p class="sub">Goal planning • Fixed Deposits • Savings recommendations • Full financial blueprint</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- 1. GOALS MANAGER (goals + goal_contributions) -->
+        <div class="card">
+            <h2>🎯 Goal Planner</h2>
+            <div class="card-sub">goals table + goal_contributions (schema)</div>
+            <div class="input-group">
+                <label>Customer ID</label>
+                <input type="number" id="goalCustId" value="1" placeholder="e.g., 1">
+            </div>
+            <div class="input-group">
+                <label>Goal Name</label>
+                <input type="text" id="goalNameDb" value="Europe Vacation">
+            </div>
+            <div class="input-group">
+                <label>Target Amount (₹)</label>
+                <input type="number" id="goalTarget" value="250000">
+            </div>
+            <div class="input-group">
+                <label>Current Savings (₹)</label>
+                <input type="number" id="goalCurrent" value="50000">
+            </div>
+            <div class="input-group">
+                <label>Timeline (Years)</label>
+                <input type="number" id="goalYears" value="2" step="0.5">
+            </div>
+            <div class="input-group">
+                <label>Priority (ENUM low/medium/high)</label>
+                <select id="goalPriority">
+                    <option value="low">low</option>
+                    <option value="medium" selected>medium</option>
+                    <option value="high">high</option>
+                </select>
+            </div>
+            <button id="createGoalBtn">➕ Create Goal (INSERT simulation)</button>
+            <div id="goalDbResult" class="result-box">
+                <p>📌 Goal & contribution tracker (matching DB schema)</p>
+            </div>
+        </div>
+
+        <!-- 2. FIXED DEPOSITS TABLE (fixed_deposits) -->
+        <div class="card">
+            <h2>🏛️ Fixed Deposits</h2>
+            <div class="card-sub">fixed_deposits table: tenure_months, rate, bank</div>
+            <div class="input-group">
+                <label>Customer ID</label>
+                <input type="number" id="fdCustId" value="1">
+            </div>
+            <div class="input-group">
+                <label>Amount (₹)</label>
+                <input type="number" id="fdAmountDb" value="200000">
+            </div>
+            <div class="input-group">
+                <label>Tenure (months)</label>
+                <input type="number" id="fdTenureMonths" value="24">
+            </div>
+            <div class="input-group">
+                <label>Interest Rate (%)</label>
+                <input type="number" id="fdRate" value="7.5" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>Bank Name</label>
+                <input type="text" id="fdBank" value="HDFC Bank">
+            </div>
+            <div class="input-group">
+                <label>Start Date (YYYY-MM-DD)</label>
+                <input type="date" id="fdStartDate" value="2024-04-01">
+            </div>
+            <button id="addFdBtn">📄 Register FD (schema-ready)</button>
+            <div id="fdDbResult" class="result-box">
+                <p>💵 Maturity calculation + FD record preview</p>
+            </div>
+        </div>
+
+        <!-- 3. SAVINGS RECOMMENDATIONS (savings_recommendations table) -->
+        <div class="card">
+            <h2>📊 Savings Analyzer</h2>
+            <div class="card-sub">savings_recommendations + income/expense logic</div>
+            <div class="input-group">
+                <label>Customer ID</label>
+                <input type="number" id="recCustId" value="1">
+            </div>
+            <div class="input-group">
+                <label>Monthly Income (₹)</label>
+                <input type="number" id="recIncome" value="60000">
+            </div>
+            <div class="input-group">
+                <label>Monthly Expenses (₹)</label>
+                <input type="number" id="recExpense" value="40000">
+            </div>
+            <button id="saveRecommendationBtn">💡 Analyze & Save Recommendation</button>
+            <div id="recResult" class="result-box">
+                <p>✨ Generates suggestion + recommended percentage (matches schema)</p>
+            </div>
+        </div>
+
+        <!-- 4. INVESTMENT ALLOCATION + GOAL CONTRIBUTION preview -->
+        <div class="card">
+            <h2>📈 Investment Plan + Contributions</h2>
+            <div class="card-sub">goal_contributions ready — auto allocation</div>
+            <div class="input-group">
+                <label>Customer ID (for plan)</label>
+                <input type="number" id="investCustId" value="1">
+            </div>
+            <div class="input-group">
+                <label>Monthly Income (₹)</label>
+                <input type="number" id="investIncome" value="60000">
+            </div>
+            <div class="input-group">
+                <label>Monthly Expenses (₹)</label>
+                <input type="number" id="investExpense" value="40000">
+            </div>
+            <div class="input-group">
+                <label>Select Goal (for contribution simulation)</label>
+                <select id="contributionGoalSelect">
+                    <option value="1">Goal ID 1: Europe Vacation</option>
+                    <option value="2">Goal ID 2: Emergency Fund</option>
+                </select>
+            </div>
+            <button id="simulateContributionBtn">💰 Simulate Monthly Contribution</button>
+            <div id="planDbResult" class="result-box">
+                <p>🏦 Allocation (30/40/20 style) + contribution insert preview</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCHEMA STATUS CARD -->
+    <div class="schema-note">
+        <strong>🗄️ NeoBank Database Schema (Active simulation):</strong> <br/>
+        ✅ <code>goals</code> (id, customer_id, goal_name, target_amount, current_amount, timeline_years, priority, status, created_at)<br/>
+        ✅ <code>goal_contributions</code> (id, goal_id, amount, contribution_date)<br/>
+        ✅ <code>fixed_deposits</code> (id, customer_id, amount, tenure_months, interest_rate, bank_name, start_date)<br/>
+        ✅ <code>savings_recommendations</code> (id, customer_id, income, expenses, recommended_percentage, suggestion)<br/>
+        📌 Sample data preloaded: goals (Vacation, Emergency Fund) + FD record (HDFC). All operations mimic INSERT logic & calculations.
+    </div>
+</div>
+
+<script>
+    // ----- DATABASE SIMULATION (in-memory store reflecting schema) -----
+    let db = {
+        goals: [
+            { id: 1, customer_id: 1, goal_name: "Europe Vacation", target_amount: 250000, current_amount: 50000, timeline_years: 2, priority: "high", status: "active", created_at: "2024-01-10" },
+            { id: 2, customer_id: 1, goal_name: "Emergency Fund", target_amount: 300000, current_amount: 150000, timeline_years: 1, priority: "high", status: "active", created_at: "2024-02-01" }
+        ],
+        goal_contributions: [
+            { id: 101, goal_id: 1, amount: 25000, contribution_date: "2025-01-15" },
+            { id: 102, goal_id: 1, amount: 25000, contribution_date: "2025-02-10" }
+        ],
+        fixed_deposits: [
+            { id: 1001, customer_id: 1, amount: 200000, tenure_months: 24, interest_rate: 7.5, bank_name: "HDFC Bank", start_date: "2024-04-01" }
+        ],
+        savings_recommendations: []
+    };
+
+    let nextGoalId = 3;
+    let nextFdId = 1002;
+    let nextContributionId = 103;
+    let nextRecId = 1;
+
+    // Helper: calculate savings percentage (matching original python logic)
+    function calculateSavings(income, expenses) {
+        const savings = income - expenses;
+        let percentage = income > 0 ? (savings / income) * 100 : 0;
+        let status = "", suggestion = "";
+        if (percentage < 10) { status = "Critical"; suggestion = "Reduce non-essential expenses immediately"; }
+        else if (percentage < 20) { status = "Below Target"; suggestion = "Try to save 20% of your income"; }
+        else if (percentage < 30) { status = "Good"; suggestion = "On track! Consider automating savings"; }
+        else { status = "Excellent"; suggestion = "Great! Consider investing surplus"; }
+        return { savings: Math.round(savings * 100)/100, percentage: Math.round(percentage * 100)/100, suggestion, status };
+    }
+
+    // FD maturity calculation (compound annual simplified)
+    function calculateMaturity(amount, ratePercent, tenureMonths) {
+        const years = tenureMonths / 12;
+        const maturity = amount * Math.pow((1 + ratePercent/100), years);
+        return Math.round(maturity * 100)/100;
+    }
+
+    // Render goal section
+    function renderGoalResult() {
+        const custId = parseInt(document.getElementById('goalCustId').value) || 1;
+        const goalName = document.getElementById('goalNameDb').value.trim() || "Untitled";
+        const target = parseFloat(document.getElementById('goalTarget').value) || 0;
+        const current = parseFloat(document.getElementById('goalCurrent').value) || 0;
+        const years = parseFloat(document.getElementById('goalYears').value) || 1;
+        const priority = document.getElementById('goalPriority').value;
+        const remaining = target - current;
+        const months = years * 12;
+        const monthlyNeeded = months > 0 ? remaining / months : remaining;
+        const progress = target > 0 ? (current / target) * 100 : 0;
+
+        document.getElementById('goalDbResult').innerHTML = `
+            <div class="inline-flex"><span>🎯 ${goalName}</span><span class="badge-status">priority: ${priority}</span></div>
+            <div>💰 Target: ₹${target.toLocaleString()} | Current: ₹${current.toLocaleString()}</div>
+            <div>📅 ${years} years (${months} months) | Remaining: ₹${Math.max(0,remaining).toLocaleString()}</div>
+            <div>📆 Monthly savings needed: <strong>₹${monthlyNeeded > 0 ? monthlyNeeded.toLocaleString() : 0}</strong></div>
+            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(progress,100)}%;"></div></div>
+            <div>📈 Progress: ${progress.toFixed(1)}% complete</div>
+            <hr>
+            <div>✅ <strong>Simulated INSERT into 'goals' table</strong> (customer_id: ${custId}, status active).<br>
+            ➕ Contribution table ready: you can add monthly contributions to reach target.</div>
+        `;
+    }
+
+    document.getElementById('createGoalBtn').addEventListener('click', () => {
+        const custId = parseInt(document.getElementById('goalCustId').value) || 1;
+        const goalName = document.getElementById('goalNameDb').value.trim();
+        const target = parseFloat(document.getElementById('goalTarget').value) || 0;
+        const current = parseFloat(document.getElementById('goalCurrent').value) || 0;
+        const years = parseFloat(document.getElementById('goalYears').value) || 1;
+        const priority = document.getElementById('goalPriority').value;
+        if (!goalName) { alert("Goal name required"); return; }
+        const newGoal = {
+            id: nextGoalId++,
+            customer_id: custId,
+            goal_name: goalName,
+            target_amount: target,
+            current_amount: current,
+            timeline_years: years,
+            priority: priority,
+            status: "active",
+            created_at: new Date().toISOString().split('T')[0]
+        };
+        db.goals.push(newGoal);
+        renderGoalResult();
+        // also refresh goal select dropdown options for contributions
+        refreshGoalSelect();
+        alert(`Goal "${goalName}" added to 'goals' table (ID: ${newGoal.id})`);
+    });
+
+    function refreshGoalSelect() {
+        const select = document.getElementById('contributionGoalSelect');
+        select.innerHTML = '';
+        db.goals.forEach(g => {
+            const option = document.createElement('option');
+            option.value = g.id;
+            option.textContent = `${g.goal_name} (ID ${g.id}) - ₹${g.target_amount.toLocaleString()}`;
+            select.appendChild(option);
+        });
+    }
+
+    // FD section (fixed_deposits table)
+    function renderFdResult() {
+        const amount = parseFloat(document.getElementById('fdAmountDb').value) || 0;
+        const months = parseInt(document.getElementById('fdTenureMonths').value) || 0;
+        const rate = parseFloat(document.getElementById('fdRate').value) || 0;
+        const bank = document.getElementById('fdBank').value.trim() || "General Bank";
+        const startDate = document.getElementById('fdStartDate').value;
+        const maturity = calculateMaturity(amount, rate, months);
+        document.getElementById('fdDbResult').innerHTML = `
+            <div>🏦 <strong>${bank}</strong> | ₹${amount.toLocaleString()} | ${months} months</div>
+            <div>📈 Interest rate: ${rate}% p.a.</div>
+            <div>💎 Maturity Amount: <strong>₹${maturity.toLocaleString()}</strong> (approx)</div>
+            <div>📅 Start: ${startDate || 'N/A'} | Tenure end: ${months} months later</div>
+            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min((rate/10)*100,100)}%;"></div></div>
+            <div>✅ FD record matches 'fixed_deposits' schema: (customer_id, amount, tenure_months, interest_rate, bank_name, start_date)</div>
+        `;
+    }
+    document.getElementById('addFdBtn').addEventListener('click', () => {
+        const custId = parseInt(document.getElementById('fdCustId').value) || 1;
+        const amount = parseFloat(document.getElementById('fdAmountDb').value);
+        const months = parseInt(document.getElementById('fdTenureMonths').value);
+        const rate = parseFloat(document.getElementById('fdRate').value);
+        const bank = document.getElementById('fdBank').value.trim();
+        const startDate = document.getElementById('fdStartDate').value;
+        if (isNaN(amount) || isNaN(months) || isNaN(rate) || !bank) { alert("Complete FD details"); return; }
+        const newFd = {
+            id: nextFdId++,
+            customer_id: custId,
+            amount: amount,
+            tenure_months: months,
+            interest_rate: rate,
+            bank_name: bank,
+            start_date: startDate || new Date().toISOString().split('T')[0]
+        };
+        db.fixed_deposits.push(newFd);
+        renderFdResult();
+        alert(`Fixed Deposit added for ₹${amount} at ${bank}`);
+    });
+
+    // Savings recommendation (savings_recommendations table)
+    function renderRecResult() {
+        const custId = parseInt(document.getElementById('recCustId').value) || 1;
+        const income = parseFloat(document.getElementById('recIncome').value) || 0;
+        const expenses = parseFloat(document.getElementById('recExpense').value) || 0;
+        const { percentage, suggestion, status } = calculateSavings(income, expenses);
+        const recPercentage = percentage;
+        document.getElementById('recResult').innerHTML = `
+            <div>🧑‍💼 Customer ID: ${custId} | Income: ₹${income.toLocaleString()} | Expenses: ₹${expenses.toLocaleString()}</div>
+            <div>📊 Savings Rate: <strong>${recPercentage}%</strong> <span class="badge-status">${status}</span></div>
+            <div>💡 Suggestion: ${suggestion}</div>
+            <div>📌 <em>This data follows 'savings_recommendations' (income, expenses, recommended_percentage, suggestion)</em></div>
+            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(recPercentage,100)}%;"></div></div>
+        `;
+    }
+    document.getElementById('saveRecommendationBtn').addEventListener('click', () => {
+        const custId = parseInt(document.getElementById('recCustId').value) || 1;
+        const income = parseFloat(document.getElementById('recIncome').value) || 0;
+        const expenses = parseFloat(document.getElementById('recExpense').value) || 0;
+        const { percentage, suggestion } = calculateSavings(income, expenses);
+        const newRec = {
+            id: nextRecId++,
+            customer_id: custId,
+            income: income,
+            expenses: expenses,
+            recommended_percentage: percentage,
+            suggestion: suggestion,
+            created_at: new Date().toISOString().slice(0,19).replace('T',' ')
+        };
+        db.savings_recommendations.push(newRec);
+        renderRecResult();
+        alert(`Recommendation saved for customer ${custId}. Total recommendations: ${db.savings_recommendations.length}`);
+    });
+
+    // Investment plan + contribution simulation (goal_contributions)
+    function renderPlanAndContribution() {
+        const custId = parseInt(document.getElementById('investCustId').value) || 1;
+        const income = parseFloat(document.getElementById('investIncome').value) || 0;
+        const expenses = parseFloat(document.getElementById('investExpense').value) || 0;
+        const { savings, percentage, suggestion } = calculateSavings(income, expenses);
+        const allocation = {
+            emergency_fund: savings * 0.3,
+            short_term_goals: savings * 0.4,
+            long_term_investments: savings * 0.3
+        };
+        const selectedGoalId = parseInt(document.getElementById('contributionGoalSelect').value);
+        const selectedGoal = db.goals.find(g => g.id === selectedGoalId);
+        let monthlyContributionMsg = "";
+        if (selectedGoal) {
+            const remainingAmt = selectedGoal.target_amount - selectedGoal.current_amount;
+            const monthsRemaining = selectedGoal.timeline_years * 12;
+            const requiredMonthly = monthsRemaining > 0 ? remainingAmt / monthsRemaining : remainingAmt;
+            monthlyContributionMsg = `🎯 For goal "${selectedGoal.goal_name}": need ₹${requiredMonthly > 0 ? requiredMonthly.toLocaleString() : 0} / month to complete.`;
+        }
+        document.getElementById('planDbResult').innerHTML = `
+            <div>🏧 Monthly Savings: ₹${savings.toLocaleString()} (${percentage}% of income)</div>
+            <div><strong>Allocation (Emergency / Short / Long):</strong></div>
+            <div>🛡️ Emergency fund: ₹${Math.round(allocation.emergency_fund).toLocaleString()}</div>
+            <div>🎯 Short-term goals: ₹${Math.round(allocation.short_term_goals).toLocaleString()}</div>
+            <div>📈 Long-term investments: ₹${Math.round(allocation.long_term_investments).toLocaleString()}</div>
+            <div>💬 ${suggestion}</div>
+            <hr>
+            <div>${monthlyContributionMsg}</div>
+            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(percentage,100)}%;"></div></div>
+            <div>✨ <strong>goal_contributions table ready</strong> — you can record monthly deposits for each goal.</div>
+        `;
+    }
+    document.getElementById('simulateContributionBtn').addEventListener('click', () => {
+        const goalId = parseInt(document.getElementById('contributionGoalSelect').value);
+        const amountContribution = parseFloat(prompt("Enter contribution amount (₹) to record in goal_contributions:", "20000"));
+        if (isNaN(amountContribution) || amountContribution <= 0) return;
+        const today = new Date().toISOString().split('T')[0];
+        const newContrib = {
+            id: nextContributionId++,
+            goal_id: goalId,
+            amount: amountContribution,
+            contribution_date: today
+        };
+        db.goal_contributions.push(newContrib);
+        // update current_amount of the goal
+        const goalIndex = db.goals.findIndex(g => g.id === goalId);
+        if (goalIndex !== -1) {
+            db.goals[goalIndex].current_amount += amountContribution;
+        }
+        renderPlanAndContribution();
+        alert(`₹${amountContribution.toLocaleString()} added to goal_contributions for goal ID ${goalId} (current amount updated)`);
+        renderGoalResult();   // sync goal view
+        refreshGoalSelect();
+    });
+
+    // Initial rendering of all sections and sample data display
+    function init() {
+        renderGoalResult();
+        renderFdResult();
+        renderRecResult();
+        renderPlanAndContribution();
+        refreshGoalSelect();
+        // Show existing FD data on UI preview
+        document.getElementById('fdAmountDb').value = 200000;
+        document.getElementById('fdTenureMonths').value = 24;
+        document.getElementById('fdRate').value = 7.5;
+        document.getElementById('fdBank').value = "HDFC Bank";
+        document.getElementById('fdStartDate').value = "2024-04-01";
+        renderFdResult();
+    }
+    init();
+
+    // additional sync listeners
+    document.getElementById('goalCustId').addEventListener('input', renderGoalResult);
+    document.getElementById('goalNameDb').addEventListener('input', renderGoalResult);
+    document.getElementById('goalTarget').addEventListener('input', renderGoalResult);
+    document.getElementById('goalCurrent').addEventListener('input', renderGoalResult);
+    document.getElementById('goalYears').addEventListener('input', renderGoalResult);
+    document.getElementById('goalPriority').addEventListener('change', renderGoalResult);
+    document.getElementById('fdAmountDb').addEventListener('input', renderFdResult);
+    document.getElementById('fdTenureMonths').addEventListener('input', renderFdResult);
+    document.getElementById('fdRate').addEventListener('input', renderFdResult);
+    document.getElementById('fdBank').addEventListener('input', renderFdResult);
+    document.getElementById('fdStartDate').addEventListener('change', renderFdResult);
+    document.getElementById('recCustId').addEventListener('input', renderRecResult);
+    document.getElementById('recIncome').addEventListener('input', renderRecResult);
+    document.getElementById('recExpense').addEventListener('input', renderRecResult);
+    document.getElementById('investCustId').addEventListener('input', renderPlanAndContribution);
+    document.getElementById('investIncome').addEventListener('input', renderPlanAndContribution);
+    document.getElementById('investExpense').addEventListener('input', renderPlanAndContribution);
+    document.getElementById('contributionGoalSelect').addEventListener('change', renderPlanAndContribution);
+</script>
+</body>
+</html>
