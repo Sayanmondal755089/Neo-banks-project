@@ -11,16 +11,16 @@
 <div class="auth-wrapper">
     <div class="auth-card">
 
-        <!-- Logo / Title -->
+        
         <div class="auth-logo">
             <h1>🏦 Neo Bank</h1>
             <p>UPI Payment Simulator &nbsp;|&nbsp; Team 6</p>
         </div>
 
-        <!-- Alert Box -->
+        
         <div class="alert alert-error" id="loginAlert"></div>
 
-        <!-- Login Form -->
+       
         <div class="form-group">
             <label>Your UPI ID</label>
             <input type="text" id="loginUpi" placeholder="e.g.  sayan@okicici" />
@@ -44,10 +44,10 @@
 </div>
 
 <script>
-    // Base URL of our Flask backend
+    
     const BASE_URL = "http://127.0.0.1:5000";
 
-    // show alert message
+   
     function showAlert(id, message, type) {
         const el = document.getElementById(id);
         el.className = "alert alert-" + type;
@@ -55,7 +55,7 @@
         el.style.display = "block";
     }
 
-    // Login function
+    
     async function doLogin() {
         const upi_id = document.getElementById("loginUpi").value.trim();
         const btn    = document.getElementById("loginBtn");
@@ -65,12 +65,12 @@
             return;
         }
 
-        // show loading
+        
         btn.innerHTML = '<span class="loader"></span> Logging in...';
         btn.disabled  = true;
 
         try {
-            // send POST request to backend
+           
             const response = await fetch(BASE_URL + "/login", {
                 method  : "POST",
                 headers : { "Content-Type": "application/json" },
@@ -80,9 +80,9 @@
             const data = await response.json();
 
             if (data.success) {
-                // save user info in localStorage so other pages can use it
+                
                 localStorage.setItem("user", JSON.stringify(data.user));
-                // go to dashboard
+               
                 window.location.href = "dashboard.html";
             } else {
                 showAlert("loginAlert", data.message, "error");
@@ -97,7 +97,7 @@
         }
     }
 
-    // allow pressing Enter key to login
+    
     document.addEventListener("keypress", function(e) {
         if (e.key === "Enter") doLogin();
     });
