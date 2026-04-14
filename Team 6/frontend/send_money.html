@@ -26,10 +26,10 @@
 
     <div class="card">
 
-        <!-- Alert -->
+       
         <div class="alert" id="sendAlert"></div>
 
-        <!-- Sender Info -->
+        
         <div style="background:#f0f4ff; border-radius:8px; padding:14px 16px; margin-bottom:22px;">
             <span style="font-size:13px; color:#666;">Sending from : </span>
             <strong id="senderInfo" style="color:#1a1a7e; font-size:14px;"></strong>
@@ -53,7 +53,7 @@
 
     </div>
 
-    <!-- Receipt Box (shown after success) -->
+    
     <div class="receipt-box" id="receiptBox">
         <div class="receipt-title">✅ Transaction Successful !</div>
         <div class="receipt-row">
@@ -120,7 +120,7 @@
             return;
         }
 
-        // loading state
+        
         btn.innerHTML = '<span class="loader"></span> Processing...';
         btn.disabled  = true;
         document.getElementById("receiptBox").style.display = "none";
@@ -139,25 +139,25 @@
             const data = await response.json();
 
             if (data.success) {
-                // update balance in localStorage
+                
                 user.balance = data.new_balance;
                 localStorage.setItem("user", JSON.stringify(user));
 
-                // update sender balance display
+               
                 document.getElementById("senderBal").textContent = "Rs. " + data.new_balance.toFixed(2);
 
-                // fill receipt
+                
                 document.getElementById("rcptTxnId").textContent    = data.txn_id;
                 document.getElementById("rcptReceiver").textContent  = data.receiver;
                 document.getElementById("rcptAmount").textContent    = "Rs. " + data.amount.toFixed(2);
                 document.getElementById("rcptBalance").textContent   = "Rs. " + data.new_balance.toFixed(2);
                 document.getElementById("rcptTime").textContent      = data.timestamp;
 
-                // show receipt
+                
                 document.getElementById("receiptBox").style.display = "block";
                 document.getElementById("sendAlert").style.display  = "none";
 
-                // clear form
+                
                 document.getElementById("receiverUpi").value = "";
                 document.getElementById("amount").value      = "";
 
