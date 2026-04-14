@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <!-- Transactions Table -->
+    
     <div class="card">
         <h2>Transactions <span id="txnCount" style="font-size:14px; color:#888; font-weight:400;"></span></h2>
         <div id="txnContainer">
@@ -60,7 +60,7 @@
         window.location.href = "index.html";
     }
 
-    // fill in current user's UPI ID by default
+    
     document.getElementById("searchUpi").value = user.upi_id;
 
     function logout() {
@@ -68,7 +68,7 @@
         window.location.href = "index.html";
     }
 
-    // load transactions from backend
+    
     async function loadTransactions() {
         const upi_id = document.getElementById("searchUpi").value.trim();
         const n      = document.getElementById("nCount").value || 10;
@@ -102,7 +102,7 @@
                 return;
             }
 
-            // build table
+            
             let html = '<div style="overflow-x:auto;">';
             html += '<table class="txn-table"><thead><tr>';
             html += '<th>#</th><th>Txn ID</th><th>Sender</th><th>Receiver</th><th>Amount</th><th>Date & Time</th><th>Status</th>';
@@ -133,7 +133,7 @@
         }
     }
 
-    // load current user's transactions on page load
+    
     loadTransactions();
 </script>
 
